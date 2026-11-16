@@ -1,0 +1,4 @@
+project_id = "bird-freehosting"
+
+[functions.health]
+verify_jwt = false

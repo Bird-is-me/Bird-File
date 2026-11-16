@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#101010" />
+		<title>Bird Files</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+		<script type="module" src="app.js"></script>
+	</head>
+	<body>
+		<main id="auth-view" class="auth-view">
+			<section class="auth-panel" aria-labelledby="auth-title">
+				<a class="brand brand-dark" href="./" aria-label="Bird Files home">
+					<img class="brand-mark" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" />
+					<span>bird<span class="brand-light">/files</span></span>
+				</a>
+				<p class="eyebrow">PRIVATE STORAGE</p>
+				<h1 id="auth-title">Your files,<br />in good hands.</h1>
+				<p class="auth-copy">Sign in or create an account for your private Bird workspace.</p>
+				<form id="sign-in-form" class="sign-in-form">
+					<label for="email">Email address</label>
+					<input id="email" name="email" type="email" autocomplete="username" required />
+					<label for="password">Password</label>
+					<input id="password" name="password" type="password" autocomplete="current-password" required />
+					<p id="auth-message" class="form-message" role="status" aria-live="polite"></p>
+					<button id="sign-in-button" class="button button-primary button-wide" type="submit">
+						Sign in <span aria-hidden="true">&#8594;</span>
+					</button>
+				</form>
+				<p class="invite-note">New to Bird Files? <button id="sign-up-button" class="link-button" type="button">Create an account</button></p>
+			</section>
+			<aside class="auth-art" aria-hidden="true">
+				<div class="art-center">
+					<img class="art-glyph" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" />
+					<p>Keep what<br />matters close.</p>
+				</div>
+			</aside>
+		</main>
+
+		<div id="app-view" class="app-view" hidden>
+			<aside class="sidebar">
+				<a class="brand" href="./" aria-label="Bird Files home">
+					<img class="brand-mark" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" />
+					<span>bird<span class="brand-light">/files</span></span>
+				</a>
+				<div class="sidebar-section-label">WORKSPACE</div>
+				<nav aria-label="Main navigation">
+					<button class="nav-link nav-link-active" type="button" data-page-target="files" aria-current="page"><img class="nav-icon" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /> Files</button>
+					<button class="nav-link" type="button" data-page-target="hosting"><img class="nav-icon" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /> Hosting</button>
+					<button class="nav-link" type="button" data-page-target="database"><img class="nav-icon" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /> Database</button>
+					<button class="nav-link" type="button" data-page-target="bird-program"><img class="nav-icon" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /> Bird Program</button>
+					<button class="nav-link" type="button" data-page-target="settings"><img class="nav-icon" src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /> Settings</button>
+				</nav>
+				<div class="sidebar-bottom">
+					<span class="private-indicator"><span></span> PRIVATE SPACE</span>
+					<p>Files are visible only to your account.</p>
+				</div>
+			</aside>
+
+			<main class="workspace">
+				<header class="topbar">
+					<div>
+						<p class="eyebrow">YOUR WORKSPACE</p>
+						<h1><span id="view-title">Files</span><span class="heading-period">.</span></h1>
+					</div>
+					<div class="account-controls">
+						<span id="user-email" class="user-email"></span>
+						<button id="sign-out-button" class="button button-quiet" type="button">Sign out</button>
+					</div>
+				</header>
+
+				<section class="page-section file-area" data-page-section="files" aria-label="Your files">
+					<div class="file-toolbar">
+						<label class="search-box">
+							<span aria-hidden="true">⌕</span>
+							<span class="sr-only">Search files</span>
+							<input id="search-input" type="search" placeholder="Search files" autocomplete="off" />
+						</label>
+						<div class="toolbar-actions">
+							<button id="refresh-button" class="button button-quiet" type="button">
+								<span aria-hidden="true">&#8635;</span> Refresh
+							</button>
+							<input id="file-input" class="sr-only" type="file" multiple />
+							<input id="folder-input" class="sr-only" type="file" webkitdirectory directory multiple />
+							<button id="upload-folder-button" class="button button-quiet" type="button">Upload folder</button>
+							<button id="create-file-button" class="button button-quiet" type="button">Create</button>
+							<button id="upload-button" class="button button-primary" type="button">
+								<span aria-hidden="true">+</span> Upload files
+							</button>
+						</div>
+					</div>
+
+					<p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+
+					<div id="file-table" class="file-table">
+						<div class="file-table-head" aria-hidden="true">
+							<span>NAME</span><span>MODIFIED</span><span>SIZE</span><span>ACTIONS</span>
+						</div>
+						<div id="file-list" class="file-list"></div>
+					</div>
+					<div id="empty-state" class="empty-state" hidden>
+						<div class="empty-mark" aria-hidden="true"><img src="https://cdn.ln-cdn.com/c/web7AbJZ012I9NdDp3C/images/bird.png" alt="" /></div>
+						<h2>No files here yet</h2>
+						<p>Upload a file to start building your private library.</p>
+						<button id="empty-upload-button" class="button button-outline" type="button">Choose files</button>
+					</div>
+					<p id="file-count" class="file-count"></p>
+				</section>
+
+				<section class="page-section dashboard-page" data-page-section="hosting" hidden>
+					<div class="section-heading"><p class="eyebrow">DOMAIN CONTROL</p><h2>Hosting</h2><p>Manage your configured domain and open your hosting control panel.</p></div>
+					<div class="dashboard-grid">
+						<article class="dashboard-panel">
+							<p class="panel-kicker">DOMAIN</p><h3 id="hosting-domain-label">No domain set</h3>
+							<p>Save your website domain in Settings to use these shortcuts.</p>
+							<div class="panel-actions"><button id="go-to-domain-button" class="button button-primary" type="button">Go to domain</button><button id="build-domain-button" class="button button-quiet" type="button">Build domain</button></div>
+						</article>
+						<article class="dashboard-panel">
+							<p class="panel-kicker">CONTROL PANEL</p><h3>Subdomains</h3>
+							<p>Open your hosting panel to create or manage a subdomain. DNS changes are made by your host.</p>
+							<div class="panel-actions"><button id="create-hosting-button" class="button button-primary" type="button">Create hosting</button><button id="create-subdomain-button" class="button button-quiet" type="button">Create subdomain</button><button id="domain-dashboard-button" class="button button-quiet" type="button">Dashboard of domain</button></div>
+						</article>
+					</div>
+					<p id="hosting-message" class="status-message" role="status" aria-live="polite"></p>
+				</section>
+
+				<section class="page-section dashboard-page" data-page-section="database" hidden>
+					<div class="section-heading"><p class="eyebrow">SUPABASE PROJECT</p><h2>Database</h2><p>Database administration stays in Supabase; this public client never receives a service-role key.</p></div>
+					<div class="dashboard-panel database-panel">
+						<p class="panel-kicker">PROJECT DATABASE</p><h3>Supabase dashboard</h3>
+						<p>Open the project to manage tables, policies, and Storage configuration.</p>
+						<div class="panel-actions"><a class="button button-primary" href="https://supabase.com/dashboard/project/nwbsosabmknpeyxoqskm/editor" target="_blank" rel="noopener noreferrer">Open database</a><a class="button button-quiet" href="https://supabase.com/dashboard/project/nwbsosabmknpeyxoqskm/storage/buckets" target="_blank" rel="noopener noreferrer">Storage buckets</a></div>
+					</div>
+				</section>
+
+				<section class="page-section dashboard-page" data-page-section="bird-program" hidden>
+					<div class="section-heading"><p class="eyebrow">BIRD LANGUAGE</p><h2>Bird Program</h2><p>Write and run small Bird programs in this browser.</p></div>
+					<div class="bird-workbench">
+						<div class="bird-editor-panel">
+							<div class="bird-file-tabs" role="tablist" aria-label="Open Bird files"><button id="bird-file-tab" class="bird-file-tab" type="button" role="tab" aria-selected="true">main.bird</button></div>
+							<div class="bird-editor-toolbar">
+								<label for="bird-program-name">Program file</label>
+								<input id="bird-program-name" type="text" value="main.bird" maxlength="120" />
+								<div class="panel-actions"><button id="run-bird-program" class="button button-primary" type="button">Run</button><button id="save-bird-program" class="button button-quiet" type="button">Save .bird</button></div>
+							</div>
+							<label class="sr-only" for="bird-program-editor">Bird source code</label>
+							<textarea id="bird-program-editor" spellcheck="false"># Bird language demo
+v names = ["Bird", "Sky"]
+s title = "line one\nline two"
+e name = input("Name?")
+
+if True:
+	print(title.s)
+elif False:
+	print("not selected")
+else:
+	print("fallback")
+
+if v.names[0] == "Bird":
+	greet(name.s)
+else:
+	print("unknown")
+
+fbs greet(e.person):
+	print("Hello, " + e.person)
+	print(v.names)</textarea>
+						</div>
+						<section class="bird-console" aria-label="Program output">
+							<div class="bird-console-heading"><span>OUTPUT</span><button id="clear-bird-output" class="button button-quiet" type="button">Clear</button></div>
+							<div id="bird-program-output" class="bird-output" role="log" aria-live="polite"><div class="bird-output-line">Run a Bird program to see its output.</div></div>
+						</section>
+					</div>
+					<div class="bird-reference"><strong>Bird basics</strong><code>r n = 5</code><code>s m = "bird"</code><code>e x = input("?")</code><code>v names = ["Bird"]</code><code>if n.r &gt; 0:</code><span>`r` number, `s` string, `e` number-or-string, `v` list; use `.r`, `.s`, or `.v` to select a typed variable.</span></div>
+					<p id="bird-save-message" class="status-message" role="status" aria-live="polite"></p>
+				</section>
+
+				<section class="page-section dashboard-page" data-page-section="settings" hidden>
+					<div class="section-heading"><p class="eyebrow">PREFERENCES</p><h2>Settings</h2><p>Set the public site address and cPanel URL for dashboard shortcuts.</p></div>
+					<form id="settings-form" class="settings-form dashboard-panel">
+						<label for="site-domain-input">Website domain</label>
+						<input id="site-domain-input" name="site-domain" type="url" placeholder="https://example.com" autocomplete="url" />
+						<label for="control-panel-input">cPanel URL</label>
+						<input id="control-panel-input" name="control-panel" type="url" placeholder="https://example.com:2083" autocomplete="url" />
+						<p class="settings-note">These links are saved in this browser only. Do not enter passwords or API tokens here.</p>
+						<div class="panel-actions"><button class="button button-primary" type="submit">Save settings</button><button id="open-cpanel-button" class="button button-quiet" type="button">Open cPanel</button></div>
+						<p id="settings-message" class="form-message" role="status" aria-live="polite"></p>
+					</form>
+				</section>
+				<footer class="workspace-footer"><span>BIRD / FILES</span><span>PRIVATE STORAGE</span></footer>
+			</main>
+		</div>
+
+		<dialog id="preview-dialog" class="modal">
+			<div class="modal-header">
+				<div><p class="eyebrow">FILE PREVIEW</p><h2 id="preview-title"></h2></div>
+				<button id="close-preview" class="close-button" type="button" aria-label="Close preview">&times;</button>
+			</div>
+			<div id="preview-content" class="preview-content"></div>
+		</dialog>
+
+		<dialog id="editor-dialog" class="modal editor-modal">
+			<form id="edit-form" class="editor-form">
+				<div class="modal-header">
+					<div><p class="eyebrow">TEXT EDITOR</p><h2 id="editor-title"></h2></div>
+					<button id="close-editor" class="close-button" type="button" aria-label="Close editor">&times;</button>
+				</div>
+				<label class="sr-only" for="editor-content">File contents</label>
+				<textarea id="editor-content" spellcheck="false"></textarea>
+				<div class="editor-footer">
+					<p id="editor-message" class="form-message" role="status" aria-live="polite"></p>
+					<button id="save-edit-button" class="button button-primary" type="submit">Save changes</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="create-file-dialog" class="modal editor-modal">
+			<form id="create-file-form" class="create-file-form">
+				<div class="modal-header">
+					<div><p class="eyebrow">NEW TEXT FILE</p><h2>Create file</h2></div>
+					<button id="close-create-file" class="close-button" type="button" aria-label="Close">&times;</button>
+				</div>
+				<label for="new-file-name">File name</label>
+				<input id="new-file-name" name="file-name" type="text" placeholder="notes.txt" required maxlength="120" />
+				<label class="sr-only" for="new-file-content">File contents</label>
+				<textarea id="new-file-content" name="file-content" spellcheck="false" placeholder="Start writing..."></textarea>
+				<div class="editor-footer"><p id="create-file-message" class="form-message" role="status" aria-live="polite"></p><button id="save-new-file-button" class="button button-primary" type="submit">Create file</button></div>
+			</form>
+		</dialog>
+	</body>
+</html>
